@@ -1,7 +1,10 @@
 package br.com.guzzmega.omnichannel.controller;
 
 import br.com.guzzmega.omnichannel.domain.Channel;
+import br.com.guzzmega.omnichannel.domain.record.ChannelRecord;
 import br.com.guzzmega.omnichannel.service.ChannelService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +21,13 @@ public class ChannelController {
     private ChannelService channelService;
 
     @PostMapping
-    public ResponseEntity<Channel> createChannel(@RequestBody Channel channel) {
-        Channel savedChannel = channelService.save(channel);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedChannel.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<Channel> createChannel(@Valid @RequestBody ChannelRecord channelRecord) {
+        var channel = new Channel();
+        BeanUtils.copyProperties(channelRecord, channel);
+        channelService.save(channel);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(channel.getId()).toUri();
+        return ResponseEntity.created(uri).body(channel);
     }
 
     @GetMapping("/{id}")

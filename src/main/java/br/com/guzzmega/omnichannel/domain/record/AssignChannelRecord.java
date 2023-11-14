@@ -4,5 +4,5 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public record AssignChannelRecord(
-        @NotNull @Min(1) Long channelId) {
+        @NotNull @Min(value=1, message="ChannelId can't be 0") Long channelId) {
 }

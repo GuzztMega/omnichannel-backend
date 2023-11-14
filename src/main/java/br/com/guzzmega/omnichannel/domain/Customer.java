@@ -3,19 +3,19 @@ package br.com.guzzmega.omnichannel.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer extends RepresentationModel<Customer> implements Serializable {
+public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@JsonIgnore
 	@ManyToMany(mappedBy="customerList")
@@ -24,6 +24,29 @@ public class Customer extends RepresentationModel<Customer> implements Serializa
 	private String name;
 	private String email;
 	private String phoneNumber;
+
+	public Customer(){
+	}
+
+	public Customer(String name, String email, String phoneNumber) {
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Customer customer)) return false;
+		return Objects.equals(name, customer.name)
+				&& Objects.equals(email, customer.email)
+				&& Objects.equals(phoneNumber, customer.phoneNumber);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, email, phoneNumber);
+	}
 
 	public Long getId() {
 		return id;

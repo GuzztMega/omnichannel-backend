@@ -20,15 +20,13 @@ public class InteractionController {
     private InteractionService interactionService;
 
     @PostMapping
-    public ResponseEntity<Interaction> createInteraction(@Valid @RequestBody InteractionRecord record) {
-        Interaction interaction = interactionService.enqueueInteraction(record);
+    public ResponseEntity<Interaction> createInteraction(@Valid @RequestBody InteractionRecord interactionRecord) {
+        Interaction interaction = interactionService.enqueueInteraction(interactionRecord);
         if(interaction.getInteractionStatus() == InteractionStatus.FAILED)
-        {
             return ResponseEntity.notFound().build();
-        }
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(interaction.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(interaction);
     }
 
     @GetMapping("/{id}")

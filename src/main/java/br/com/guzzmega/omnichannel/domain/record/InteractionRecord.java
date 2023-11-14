@@ -1,11 +1,10 @@
 package br.com.guzzmega.omnichannel.domain.record;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record InteractionRecord(
-        @NotNull String customerParam,
-        @NotNull String channelParam,
-        @NotEmpty String body
+        @NotBlank(message = "CustomerParam is mandatory") String customerParam,
+        @NotBlank(message = "ChannelParam is mandatory") String channelParam,
+        @NotBlank(message = "Body is mandatory") String body
 ) {
 }

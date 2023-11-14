@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.Suite;
 import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
-@SuiteDisplayName("Tests Suite")
+@SuiteDisplayName("Omnichannel Tests Suite")
 @SelectPackages({
         "br.com.guzzmega.omnichannel.domain",
         "br.com.guzzmega.omnichannel.service",

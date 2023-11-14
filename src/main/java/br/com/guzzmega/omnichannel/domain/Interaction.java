@@ -3,19 +3,16 @@ package br.com.guzzmega.omnichannel.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "INTERACTION")
-public class Interaction extends RepresentationModel<Interaction> implements Serializable {
+public class Interaction implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Channel channel;
@@ -36,15 +33,13 @@ public class Interaction extends RepresentationModel<Interaction> implements Ser
     @NotEmpty
     private String body;
 
-    long getCallDurationSeconds(){
-        if(getVoiceEndDate() == null){
-            return 0;
-        }
+    public Interaction(){
+    }
 
-        return ChronoUnit.MILLIS.between(
-            getVoiceStartDate().atZone(ZoneId.systemDefault()).toInstant(),
-            getVoiceEndDate().atZone(ZoneId.systemDefault()).toInstant()
-        );
+    public Interaction(String channelParam, String customerParam, String body) {
+        this.body = body;
+        this.channelParam = channelParam;
+        this.customerParam = customerParam;
     }
 
     public Long getId() {

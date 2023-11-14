@@ -2,19 +2,19 @@ package br.com.guzzmega.omnichannel.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CHANNEL")
-public class Channel extends RepresentationModel<Channel> implements Serializable {
+public class Channel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Enumerated(EnumType.STRING) @NotNull
 	private ChannelType channelType;
@@ -26,10 +26,35 @@ public class Channel extends RepresentationModel<Channel> implements Serializabl
 	)
 	private List<Customer> customerList = new ArrayList<>();
 
+	public Channel(){
+	}
+
+	public Channel(String name, String email, String phoneNumber, ChannelType channelType) {
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.channelType = channelType;
+	}
+
 	@NotNull
 	private String name;
 	private String email;
 	private String phoneNumber;
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Channel channel)) return false;
+		return channelType == channel.channelType
+				&& Objects.equals(name, channel.name)
+				&& Objects.equals(email, channel.email)
+				&& Objects.equals(phoneNumber, channel.phoneNumber);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(channelType, name, email, phoneNumber);
+	}
 
 	public Long getId() {
 		return id;
