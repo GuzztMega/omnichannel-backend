@@ -36,7 +36,7 @@ public class Interaction implements Serializable {
     public Interaction(){
     }
 
-    public Interaction(String channelParam, String customerParam, String body) {
+    public Interaction(String customerParam, String channelParam, String body) {
         this.body = body;
         this.channelParam = channelParam;
         this.customerParam = customerParam;

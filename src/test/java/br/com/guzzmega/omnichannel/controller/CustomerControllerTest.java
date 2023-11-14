@@ -94,10 +94,10 @@ class CustomerControllerTest {
     @DisplayName("Must retrieve Customer interaction historic successfully")
     public void whenGetHistoricShouldReturnInteractions() {
         Long customerId = 1L;
-        var interaction1 = new Interaction("omnichannel@gmail.com", "mary@gmail.com", "Hey!");
+        var interaction1 = new Interaction( "mary@gmail.com","omnichannel@gmail.com","Hey!");
         interaction1.setSendDate(LocalDateTime.now());
         interaction1.setInteractionStatus(InteractionStatus.QUEUED);
-        var interaction2 = new Interaction("omnichannel@gmail.com", "mary@gmail.com", "Hey?");
+        var interaction2 = new Interaction( "mary@gmail.com","omnichannel@gmail.com","Hey?");
         interaction2.setSendDate(LocalDateTime.now());
         interaction2.setInteractionStatus(InteractionStatus.QUEUED);
 
