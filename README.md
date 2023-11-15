@@ -46,6 +46,7 @@ A API oferece endpoints para gerenciar canais, clientes e interações. Aqui est
 - **Criar um Cliente:** POST `/customers`
 - **Obter um Cliente por ID:** GET `/customers/{id}`
 - **Listar Histórico de Interações do Cliente:** GET `/customers/{id}/historic`
+- **Inserir Cliente em um Canal:** PUT `/customers/{id}/channels`
 
 ### Interações
 
